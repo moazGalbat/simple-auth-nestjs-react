@@ -1,13 +1,29 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import config from './config/config';
+import { DatabaseConfig } from './config/config.interface';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      'mongodb+srv://moazgalbat:SAnWzTBMlGT0wX3m@cluster0.ulbb7za.mongodb.net/api?retryWrites=true&w=majority&appName=Cluster0',
-    ),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [config],
+      envFilePath: '.env',
+    }),
+    MongooseModule.forRootAsync({
+      useFactory: async (configService: ConfigService) => {
+        const dbConfig = configService.get<DatabaseConfig>('database');
+        return {
+          uri: dbConfig.url,
+        };
+      },
+      inject: [ConfigService],
+    }),
     UsersModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
