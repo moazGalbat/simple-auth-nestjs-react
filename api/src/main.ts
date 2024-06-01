@@ -12,6 +12,7 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
+  app.enableCors();
   const configService = app.get(ConfigService<Config>);
   const appConfig = configService.get('app');
   await app.listen(appConfig.port);
