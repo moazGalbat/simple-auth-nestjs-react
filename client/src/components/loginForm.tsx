@@ -14,7 +14,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { loginApi } from "../utils/apis";
-import { DevTool } from "@hookform/devtools";
 import { Link, Navigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/authContext";
@@ -25,7 +24,6 @@ export default function LoginForm() {
     handleSubmit,
     formState: { errors },
     setError,
-    control,
   } = useForm<LoginSchemaType>({
     resolver: zodResolver(LoginSchema),
   });
@@ -35,7 +33,7 @@ export default function LoginForm() {
     onSuccess: (data) => {
       const accessToken = data.data.accessToken;
       login(accessToken);
-    }
+    },
   });
   const onSubmit: SubmitHandler<LoginSchemaType> = async (formData) => {
     await mutateAsync(formData).catch((err) => {
@@ -91,6 +89,9 @@ export default function LoginForm() {
               error={!!errors.password}
               helperText={errors.password?.message}
             />
+            {errors.root && (
+              <Typography color="red">{errors.root.message}</Typography>
+            )}
             <Button
               type="submit"
               fullWidth
@@ -106,9 +107,7 @@ export default function LoginForm() {
             </Grid>
           </Box>
         </Box>
-        {errors.root && <p>{errors.root.message}</p>}
       </Container>
-      <DevTool control={control} />
     </>
   );
 }

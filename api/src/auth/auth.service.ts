@@ -8,7 +8,7 @@ import { PasswordService } from './password.service';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from 'src/users/user.entity';
-import { AccessToken } from './dto/access-token.dto';
+import { AccessToken } from './types/accessToken';
 import { SignupDto } from './dto/singup.dto';
 import { LoginDto } from './dto/login.dto';
 
@@ -24,7 +24,6 @@ export class AuthService {
     const hashedPassword = await this.passwordService.hashPassword(
       payload.password,
     );
-
     const userAlreadyExists = await this.userModel.findOne({
       email: payload.email,
     });

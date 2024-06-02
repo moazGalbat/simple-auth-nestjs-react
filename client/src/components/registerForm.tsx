@@ -24,7 +24,7 @@ export default function RegisterForm() {
     register,
     handleSubmit,
     formState: { errors },
-    setError
+    setError,
   } = useForm<RegisterSchemaType>({
     resolver: zodResolver(registerSchema),
   });
@@ -34,7 +34,7 @@ export default function RegisterForm() {
     onSuccess: (data) => {
       const accessToken = data.data.accessToken;
       login(accessToken);
-    }
+    },
   });
   const onSubmit: SubmitHandler<RegisterSchemaType> = async (formData) => {
     await mutateAsync(formData).catch((err) => {
@@ -106,6 +106,9 @@ export default function RegisterForm() {
               />
             </Grid>
           </Grid>
+          {errors.root && (
+            <Typography color="red">{errors.root.message}</Typography>
+          )}
           <Button
             type="submit"
             fullWidth
