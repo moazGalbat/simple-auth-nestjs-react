@@ -17,6 +17,9 @@ const ProfileContainer = styled(Container)(() => ({
   justifyContent: "center",
   alignItems: "center",
   minHeight: "100vh",
+  height: "100%",
+  flexDirection: "column",
+  gap: "20px",
 }));
 
 const ProfileCard = styled(Card)(({ theme }) => ({
@@ -46,16 +49,17 @@ export default function Profile() {
   });
   return (
     <ProfileContainer maxWidth="md">
+      <Typography variant="h4">Welcome to your profile</Typography>
       <ProfileCard>
         {isLoading ? (
           <Skeleton variant="circular" width={120} height={120} />
         ) : (
           <ProfileAvatar alt="Profile Picture">
-            <AccountBox />
+            <AccountBox sx={{ fontSize: 60 }} />
           </ProfileAvatar>
         )}
         <ProfileDetails>
-          <Typography variant="h4">{data?.data.name}</Typography>
+          <Typography variant="h5">{data?.data.name}</Typography>
           <Typography variant="body1" color="textSecondary">
             {data?.data.email}
           </Typography>
