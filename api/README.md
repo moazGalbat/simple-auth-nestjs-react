@@ -1,73 +1,68 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# NestJS Authentication Application
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Overview
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This project is a NestJS application designed to provide user authentication functionalities. The application has three main endpoints and utilizes JWT for secure authentication.
 
-## Description
+## Endpoints
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+1. **POST /auth/login**
+   - Authenticates a user and returns a JWT token.
+   - **Request Body:**
+     ```json
+     {
+       "email": "user@example.com",
+       "password": "P@ssw0rd"
+     }
+     ```
 
-## Installation
+2. **POST /auth/register**
+   - Registers a new user.
+   - **Request Body:**
+     ```json
+     {
+       "name": "John Doe",
+       "email": "john.doe@example.com",
+       "password": "P@ssw0rd"
+     }
+     ```
 
+3. **GET /users/me**
+   - Returns the authenticated user's information.
+   - **Headers:**
+     ```json
+     {
+       "Authorization": "Bearer <JWT_TOKEN>"
+     }
+     ```
+
+## User Model
+
+The user model consists of the following properties:
+
+- **name:** String
+- **email:** String
+- **password:** String
+
+## Technology Stack
+
+- **NestJS:** A progressive Node.js framework for building efficient and scalable server-side applications.
+- **MongoDB + Mongoose:** MongoDB as the database and Mongoose as the ODM (Object Data Modeling) library for MongoDB.
+- **Passport:** Used for handling authentication strategies, specifically JWT (JSON Web Token).
+
+## Installation and Setup
+
+1. **install dependencies**
 ```bash
-$ npm install
+npm install
+```
+2. **Write `.env` file as `.env.example`**
+3. **run the app**
+```bash
+npm run start:dev
 ```
 
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+## Usage
+1. To register a new user, send a POST request to /auth/register with the user's name, email, and password.
+2. To login, send a POST request to /auth/login with the user's email and password. The response will include a JWT token.
+3. To access the protected route /users/me, include the JWT token in the Authorization header as a Bearer token.
