@@ -45,7 +45,7 @@ export class AuthService {
     const user = await this.userModel.findOne({ email: payload.email });
 
     if (!user) {
-      throw new NotFoundException();
+      throw new NotFoundException('Incorrect email or password.');
     }
 
     const passwordValid = await this.passwordService.validatePassword(
@@ -54,7 +54,7 @@ export class AuthService {
     );
 
     if (!passwordValid) {
-      throw new NotFoundException();
+      throw new NotFoundException('Incorrect email or password.');
     }
 
     return this.generateTokens({
