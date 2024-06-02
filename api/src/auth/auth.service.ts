@@ -2,6 +2,7 @@ import {
   Injectable,
   NotFoundException,
   BadRequestException,
+  Logger,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PasswordService } from './password.service';
@@ -17,6 +18,7 @@ export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
     private readonly passwordService: PasswordService,
+    private readonly logger: Logger,
     @InjectModel(User.name) private userModel: Model<User>,
   ) {}
 
@@ -35,6 +37,7 @@ export class AuthService {
       password: hashedPassword,
     });
     await createdUser.save();
+    this.logger.log(`User ${createdUser.email} created.`, AuthService.name);
     return this.generateTokens({
       userId: createdUser.id,
     });
@@ -53,6 +56,7 @@ export class AuthService {
     );
 
     if (!passwordValid) {
+      this.logger.error(`Incorrect email or password.`, AuthService.name);
       throw new NotFoundException('Incorrect email or password.');
     }
 
