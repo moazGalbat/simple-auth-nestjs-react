@@ -5,7 +5,7 @@ This is a full-stack application that performs simple authentication. The projec
 
 ## Deployment
 - `api`: [API](https://auth-api-nestjs-moazgalbat-moazs-projects-4af0a0b8.vercel.app)
-- `client`: [Preview](https://funny-muffin-b66140.netlify.app/)
+- `client`: [Preview](https://simple-auth-nestjs-react.vercel.app/login)
 ## Installation
 
 Follow the steps below to set up the project:
